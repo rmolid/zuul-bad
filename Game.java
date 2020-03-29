@@ -34,23 +34,24 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room comedor, cocina,dormitorio, cuartel, armeria, establo;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
+        comedor = new Room("Te encuentras en el comedor del castillo, encuentra a Bucéfalo");
+        cocina = new Room("¡Hora de reponer fuerzas en la cocina!");
+        cuartel = new Room("Vaya el cuartel está vacío, ¿Dónde estarán los soldados?");
+        armeria = new Room("Has llegado a la armería, ¡Hay una gran cantidad de espadas!");
+        establo = new Room("¡¡Bucéfalo!! Mi fiel compañero, por fín te encuentro");
+        dormitorio= new Room("Estas en el dormitorio, no es hora de holgazanear");
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
-
-        currentRoom = outside;  // start game outside
+        comedor.setExits(null, cuartel, dormitorio, cocina);
+        cocina.setExits(null, comedor, null, null);
+        dormitorio.setExits(comedor, null, null, null);
+        cuartel.setExits(null, null, armeria, comedor);
+        armeria.setExits(cuartel, null, establo, null);
+        establo.setExits(armeria,null, null, null); 
+        
+        currentRoom = comedor;  // start game outside
     }
 
     /**
