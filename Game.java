@@ -44,12 +44,12 @@ public class Game
         establo = new Room("¡¡Bucéfalo!! Mi fiel compañero, por fín te encuentro");
         dormitorio= new Room("Estas en el dormitorio, no es hora de holgazanear");
         // initialise room exits
-        comedor.setExits(null, cuartel, dormitorio, cocina);
-        cocina.setExits(null, comedor, null, null);
-        dormitorio.setExits(comedor, null, null, null);
-        cuartel.setExits(null, null, armeria, comedor);
-        armeria.setExits(cuartel, null, establo, null);
-        establo.setExits(armeria,null, null, null); 
+        comedor.setExits(null, cuartel, dormitorio, cocina, armeria);
+        cocina.setExits(null, comedor, null, null, null);
+        dormitorio.setExits(comedor, null, null, null, null);
+        cuartel.setExits(null, null, armeria, comedor, null);
+        armeria.setExits(cuartel, null, establo, null, null);
+        establo.setExits(armeria,null, null, null, null); 
 
         currentRoom = comedor;  // start game outside
     }
@@ -154,6 +154,9 @@ public class Game
         if(direction.equals("south")) {
             nextRoom = currentRoom.southExit;
         }
+        if(direction.equals("southEast")) {
+            nextRoom = currentRoom.southEastExit;
+        }
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
@@ -198,6 +201,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.southEastExit != null) {
+            System.out.print("southEast ");
         }
         System.out.println();
 
