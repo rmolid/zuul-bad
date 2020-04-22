@@ -37,13 +37,13 @@ public class Game
         Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
-        comedor = new Room("Te encuentras en el comedor del castillo, encuentra a Bucéfalo");
-        cocina = new Room("¡Hora de reponer fuerzas en la cocina!");
-        cuartel = new Room("Vaya el cuartel está vacío, ¿Dónde estarán los soldados?");
-        armeria = new Room("Has llegado a la armería, ¡Hay una gran cantidad de espadas!");
-        establo = new Room("¡¡Bucéfalo!! Mi fiel compañero, por fín te encuentro");
-        dormitorio = new Room("Estas en el dormitorio, no es hora de holgazanear");
-        corral = new Room ( "Te encuentras en el corral, sigue buscando");
+        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo");
+        cocina = new Room("Cocina");
+        cuartel = new Room("Cuartel");
+        armeria = new Room("Armeria");
+        establo = new Room("Establo,¡¡Bucéfalo!!");
+        dormitorio = new Room("Dormitorio");
+        corral = new Room ( "Corral");
         // initialise room exits        
         comedor.setExit("east", cuartel);
         comedor.setExit("south", dormitorio);
@@ -187,8 +187,8 @@ public class Game
 
     private void printLocationInfo()
     {        
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print(currentRoom.getExitString());
+        System.out.println(currentRoom.getLongDescription());
+       
         System.out.println();
     }
 }
