@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room comedor, cocina,dormitorio, cuartel, armeria, establo;
+        Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
         comedor = new Room("Te encuentras en el comedor del castillo, encuentra a Bucéfalo");
@@ -42,8 +42,8 @@ public class Game
         cuartel = new Room("Vaya el cuartel está vacío, ¿Dónde estarán los soldados?");
         armeria = new Room("Has llegado a la armería, ¡Hay una gran cantidad de espadas!");
         establo = new Room("¡¡Bucéfalo!! Mi fiel compañero, por fín te encuentro");
-        dormitorio= new Room("Estas en el dormitorio, no es hora de holgazanear");
-   
+        dormitorio = new Room("Estas en el dormitorio, no es hora de holgazanear");
+        corral = new Room ( "Te encuentras en el corral, sigue buscando");
         // initialise room exits        
         comedor.setExit("east", cuartel);
         comedor.setExit("south", dormitorio);
@@ -51,6 +51,9 @@ public class Game
         comedor.setExit("southEast", armeria);
         
         cocina.setExit("east", comedor);
+        cocina.setExit("abajo", corral);
+        
+        corral.setExit ("arriba", cocina);
         
         dormitorio.setExit("north", comedor);
         
