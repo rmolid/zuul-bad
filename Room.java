@@ -46,18 +46,7 @@ public class Room
      * @return La sala ubicada en la direccion especificada o null si no hay ninguna salida en esa direccion
      */
     public Room getExit(String salida) {
-        Room roomDevuelta = null;
-        if (salida.equals("north")) 
-            roomDevuelta = exits.get("northExit");
-        if (salida.equals("south")) 
-            roomDevuelta = exits.get("southExit");
-        if (salida.equals("east")) 
-            roomDevuelta = exits.get("eastExit");
-        if (salida.equals("west")) 
-            roomDevuelta = exits.get("westExit");
-        if (salida.equals("southEast")) 
-            roomDevuelta = exits.get("southEastExit");
-        return roomDevuelta;
+        return exits.get(salida);
     }
 
     /**
@@ -69,17 +58,10 @@ public class Room
      */
     public String getExitString() {
         String aDevolver = "Exits: ";
-        if(exits.get("northExit") != null)
-            aDevolver += "north ";
-        if(exits.get("eastExit") != null)
-            aDevolver += "east ";
-        if(exits.get("southExit") != null)
-            aDevolver += "south ";
-        if(exits.get("southEastExit") != null)
-            aDevolver += "southEast ";
-        if(exits.get("westExit") != null)
-            aDevolver += "west ";
- 
+        for (String descripcion : exits.keySet()) {
+            aDevolver += descripcion + " ";
+        }
+
         return aDevolver;
     }
 
@@ -90,17 +72,7 @@ public class Room
      * @param sala La sala que se encuentra en la direccion indicada
      */
     public void setExit(String direccion, Room sala) {
-        if(direccion.equals("north"))
-            exits.put("northExit" ,sala);
-        else if(direccion.equals("east"))
-            exits.put("eastExit" ,sala);
-        else if(direccion.equals("south"))
-            exits.put("southExit" ,sala);
-        else if(direccion.equals("west"))
-            exits.put("westExit" ,sala);
-        else if(direccion.equals("southEast"))
-            exits.put("southEastExit" ,sala);
-
+        exits.put(direccion, sala);
     }
 
 }
