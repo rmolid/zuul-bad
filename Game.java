@@ -11,7 +11,7 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -37,13 +37,21 @@ public class Game
         Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
-        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo", "", 0);
-        cocina = new Room("Cocina","Frutero", 200);
-        cuartel = new Room("Cuartel", "", 0);
-        armeria = new Room("Armeria", "Espada de acero", 1100);
-        establo = new Room("Establo,¡¡Bucéfalo!!","", 0);
-        dormitorio = new Room("Dormitorio","Cofre de oro", 600);
-        corral = new Room ( "Corral", "", 0);
+        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo");
+        cocina = new Room("Cocina");
+        cuartel = new Room("Cuartel");
+        armeria = new Room("Armeria");
+        establo = new Room("Establo, Bucèfalo!!");
+        dormitorio = new Room("Dormitorio");
+        corral = new Room ( "Corral");
+
+        cocina.addItem(new Item("Frutero", 200));
+        corral.addItem(new Item("Cubo", 50));
+        corral.addItem(new Item("Herradura", 10));
+        dormitorio.addItem(new Item("Cofre de oro", 500));
+        cuartel.addItem(new Item("Casco", 120));
+        armeria.addItem(new Item("Espada", 1100));
+        
         // initialise room exits        
         comedor.setExit("east", cuartel);
         comedor.setExit("south", dormitorio);

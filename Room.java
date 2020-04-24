@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * Class Room - a room in an adventure game.
@@ -18,7 +19,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-    private Item item;
+    private ArrayList<Item> items;
 
     /**
      * Create a room described "description". Initially, it has
@@ -26,11 +27,20 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, String itemDescription, int  itemWeight) 
+    public Room(String description) 
     {
         this.description = description;
         this.exits = new HashMap<>();
-        this.item = new Item (itemDescription,itemWeight);
+        this.items = new ArrayList<>();
+    }
+
+    /**
+     * Add item to the room
+     * @param item
+     */
+    public void addItem(Item item)
+    {
+        this.items.add(item);
     }
 
     /**
@@ -88,12 +98,17 @@ public class Room
      */
     public String getLongDescription(){
         String aDevolver = "You are in the " + getDescription() + "\n" + getExitString();
-        
-        if(item.getItemDescription().equals("")){
+
+
+        //Mi sala contiene objetos
+        if(this.items.size() > 0 ){
+            for(Item item : this.items) {
+                aDevolver = aDevolver + "\nObjeto: " + item.getItemDescription()+ "\nPeso del objeto: " + item.getItemWeight() + "gr";
+            }
+        }else { //Mi sala no contiene objetos
             aDevolver = aDevolver + "\nObjeto: " + "Esta sala no tiene ningun objeto.";
-        }else{
-            aDevolver = aDevolver + "\nObjeto: " + item.getItemDescription()+ "\nPeso del objeto: " + item.getItemWeight() + "gr";
         }
+        
         
         return aDevolver; 
     } 
