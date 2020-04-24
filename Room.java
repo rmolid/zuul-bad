@@ -18,6 +18,8 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private String itemDescription;
+    private int itemWeight;
 
     /**
      * Create a room described "description". Initially, it has
@@ -25,10 +27,12 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String itemDescription, int  itemWeight) 
     {
         this.description = description;
         exits = new HashMap<>();
+        this.itemDescription = itemDescription;
+        this.itemWeight = itemWeight;
     }
 
     /**
@@ -50,11 +54,11 @@ public class Room
     }
 
     /**
-     * Devuelve la información de las salidas existentes
+     * Devuelve la informacion de las salidas existentes
      * Por ejemplo: "Exits: north east west" o "Exits: south" 
      * o "Exits: " si no hay salidas disponibles
      *
-     * @return Una descripción de las salidas existentes.
+     * @return Una descripcion de las salidas existentes.
      */
     public String getExitString() {
         String aDevolver = "Exits: ";
@@ -74,17 +78,36 @@ public class Room
     public void setExit(String direccion, Room sala) {
         exits.put(direccion, sala);
     }
-    
-     /**
+
+    /**
      * Devuelve un texto con la descripcion completa de la habitacion, que 
-     * incluye la descripcion corta de la sala y las salidas de la misma. Por ejemplo:
+     * incluye la descripcion corta de la sala, las salidas de la misma asï¿½ como
+     * la descripcion del objerto y peso en gramos. Por ejemplo:
      *     You are in the lab
      *     Exits: north west southwest
+     *     Objeto: Espada de acero 1200gr
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
-     public String getLongDescription(){
-         String aDevolver = "You are in the " + getDescription() + "\n" + getExitString();
-         
-         return aDevolver; 
-        }
+    public String getLongDescription(){
+        String aDevolver = "You are in the " + getDescription() +
+        "\n" + getExitString() + "\nObjeto: " + getItemDescriptio()+ "\nPeso del objeto: " + getItemWeight() + "gr";
+
+        return aDevolver; 
+    }
+
+    /**
+     * Devuelve la descripcion del item;
+     * @return itemDescription
+     */
+    public String getItemDescriptio() {
+        return itemDescription;
+    }
+
+    /**
+     * Devuelve el peso del objeto
+     * @return itemWeight
+     */
+    public int getItemWeight() {
+        return itemWeight;
+    }
 }
