@@ -18,8 +18,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-    private String itemDescription;
-    private int itemWeight;
+    private Item item;
 
     /**
      * Create a room described "description". Initially, it has
@@ -30,9 +29,8 @@ public class Room
     public Room(String description, String itemDescription, int  itemWeight) 
     {
         this.description = description;
-        exits = new HashMap<>();
-        this.itemDescription = itemDescription;
-        this.itemWeight = itemWeight;
+        this.exits = new HashMap<>();
+        this.item = new Item (itemDescription,itemWeight);
     }
 
     /**
@@ -89,25 +87,14 @@ public class Room
      * @return Una descripcion completa de la habitacion incluyendo sus salidas
      */
     public String getLongDescription(){
-        String aDevolver = "You are in the " + getDescription() +
-        "\n" + getExitString() + "\nObjeto: " + getItemDescriptio()+ "\nPeso del objeto: " + getItemWeight() + "gr";
-
+        String aDevolver = "You are in the " + getDescription() + "\n" + getExitString();
+        
+        if(item.getItemDescription().equals("")){
+            aDevolver = aDevolver + "\nObjeto: " + "Esta sala no tiene ningun objeto.";
+        }else{
+            aDevolver = aDevolver + "\nObjeto: " + item.getItemDescription()+ "\nPeso del objeto: " + item.getItemWeight() + "gr";
+        }
+        
         return aDevolver; 
-    }
-
-    /**
-     * Devuelve la descripcion del item;
-     * @return itemDescription
-     */
-    public String getItemDescriptio() {
-        return itemDescription;
-    }
-
-    /**
-     * Devuelve el peso del objeto
-     * @return itemWeight
-     */
-    public int getItemWeight() {
-        return itemWeight;
-    }
+    } 
 }
