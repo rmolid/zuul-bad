@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room ultimaHabitacionVisitada;
 
     /**
      * Create the game and initialise its internal map.
@@ -51,29 +52,30 @@ public class Game
         dormitorio.addItem(new Item("Cofre de oro", 500));
         cuartel.addItem(new Item("Casco", 120));
         armeria.addItem(new Item("Espada", 1100));
-        
+
         // initialise room exits        
         comedor.setExit("east", cuartel);
         comedor.setExit("south", dormitorio);
         comedor.setExit("west", cocina);
         comedor.setExit("southEast", armeria);
-        
+
         cocina.setExit("east", comedor);
         cocina.setExit("abajo", corral);
-        
+
         corral.setExit ("arriba", cocina);
-        
+
         dormitorio.setExit("north", comedor);
-        
+
         cuartel.setExit("south", armeria);
         cuartel.setExit("west", comedor);
-        
+
         armeria.setExit("north", cuartel);
         armeria.setExit("south", establo);
-        
+
         establo.setExit("north", armeria);
 
         currentRoom = comedor;  // start game outside
+        ultimaHabitacionVisitada = currentRoom;
     }
 
     /**
@@ -137,6 +139,9 @@ public class Game
         else if (commandWord.equals("eat")){
             eat();
         }
+        else if (commandWord.equals("back")){           
+            back();
+        }
 
         return wantToQuit;
     }
@@ -178,8 +183,10 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            ultimaHabitacionVisitada = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
+
         }
     }
 
@@ -198,19 +205,33 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
+
+    private void back() 
+    {
+        if(ultimaHabitacionVisitada != currentRoom){
+            //Me puedo mover atras
+            currentRoom = ultimaHabitacionVisitada;
+            printLocationInfo();
+        }else{
+            //No me puedo mover
+            System.out.println("No puedes usar este comando");
+        }
+
+    }
+
     private void look() {
-      System.out.println(currentRoom.getLongDescription());
+        System.out.println(currentRoom.getLongDescription());
     }
-    
+
     private void eat() {
-      System.out.println("You have eaten now and you are not hungry any more");
+        System.out.println("You have eaten now and you are not hungry any more");
     }
-    
+
     private void printLocationInfo()
     {        
         System.out.println(currentRoom.getLongDescription());
-       
+
         System.out.println();
     }
+
 }
