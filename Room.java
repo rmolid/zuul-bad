@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -41,6 +42,42 @@ public class Room
     public void addItem(Item item)
     {
         this.items.add(item);
+    }
+
+    public ArrayList<Item> getItems() {
+        return this.items;
+    }
+    
+    /** 
+     * Elimina un objeto de la habitacion 
+     */
+    public boolean removeItem(String id){
+        boolean removed = false;
+        Iterator<Item> iterator = items.iterator();
+        while(iterator.hasNext() && !removed){
+            Item currentItem = iterator.next();
+            if(currentItem.getId().equals(id)){
+                iterator.remove();
+                removed = true;
+            }
+        }
+
+        return removed;
+    }
+
+    /**
+     * busca un objeto en la habitacion
+     * @param id
+     * @return objeto Item or null
+     */
+    public Item find(String id) {
+        Item item = null;
+        for(Item objeto : this.items){
+            if(objeto.getId().equals(id)){
+                item = objeto;
+            }
+        }
+        return item;
     }
 
     /**

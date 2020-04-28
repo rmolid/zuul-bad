@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Iterator;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -12,7 +14,7 @@ import java.util.Stack;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
+ * @author  Michael Kï¿½lling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -21,6 +23,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> visitadas;
+    private ArrayList<Item> items;
+    private int pesoMax;
 
     /**
      * Create the game and initialise its internal map.
@@ -29,6 +33,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        items = new ArrayList<Item>();
+        pesoMax = 1250;
     }
 
     /**
@@ -39,20 +45,20 @@ public class Game
         Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
-        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo");
+        comedor = new Room("Comedor del castillo, encuentra a Bucefalo");
         cocina = new Room("Cocina");
         cuartel = new Room("Cuartel");
         armeria = new Room("Armeria");
-        establo = new Room("Establo, Bucèfalo!!");
+        establo = new Room("Establo, Bucefalo!!");
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
-        cocina.addItem(new Item("Frutero", 200));
-        corral.addItem(new Item("Cubo", 50));
-        corral.addItem(new Item("Herradura", 10));
-        dormitorio.addItem(new Item("Cofre de oro", 500));
-        cuartel.addItem(new Item("Casco", 120));
-        armeria.addItem(new Item("Espada", 1100));
+        cocina.addItem(new Item("Frutero con manzanas", 200 , "frutero",true));
+        corral.addItem(new Item("Cubo con agua", 50, "cubo", false));
+        corral.addItem(new Item("Herradura de caballo", 10, "herradura", true));
+        dormitorio.addItem(new Item("Cofre de oro", 500, "cofre", true));
+        cuartel.addItem(new Item("Casco de acero", 120,"casco", false));
+        armeria.addItem(new Item("Espada del rey", 1100, "espada", true));
 
         // initialise room exits        
         comedor.setExit("east", cuartel);
@@ -143,11 +149,145 @@ public class Game
         else if (commandWord.equals("back")){           
             back();
         }
+        else if (commandWord.equals("take")){
+            take(command);
+        }else if (commandWord.equals("drop")){
+            drop(command);
+        }else if (commandWord.equals("items")){
+            items();
+        }
 
         return wantToQuit;
     }
 
     // implementations of user commands:
+    /**
+     * Muestra los objetos que hay en la mochila
+     */
+    private void items(){
+        if(items.isEmpty()){
+            System.out.println("No llevas objetos!");
+        }else{
+            String itemDescription = "Mis objetos son: \n";
+            for(Item item : this.items){
+                itemDescription += item.toString();
+            }
+
+            itemDescription += "El peso acumulado es: " + pesoAcumulado() + " gr. \n";
+            System.out.println(itemDescription);
+
+        }
+
+    }
+
+    /**
+     * Muestra el peso total de los objetos de la mochila
+     */
+    public int pesoAcumulado() {
+        int pesoAcumulado = 0;
+        for (Item item : this.items) {
+            pesoAcumulado += item.getItemWeight();
+        }
+
+        return pesoAcumulado;
+    }
+
+    /**
+     * Metodo que permite dejar un objeto cuando este este en la mochila.
+     * Si el objeto no existe o no esta en la mochila se muestra un mensaje por pantalla
+     */
+    private void drop(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("Introduce un Id correcto");
+            return;
+        }
+
+        String idItem = comando.getSecondWord();
+
+        if(!this.items.isEmpty()){
+            //Tengo objetos
+            if(existItem(idItem)){
+                //Si existe el objeto lo borro y lo agrego a la habitacion actual
+                Item item = removeItem(idItem);
+                currentRoom.addItem(item);
+            }else{
+                //Si NO existe el objeto
+                System.out.println("No existe el objeto que quieres dejar.");
+            }
+        }else {
+            System.out.println("No tienes objetos en la mochila.");
+        }
+
+    }
+
+    /**
+    * Metodo que nos dice que el objeto existe conociendo su id.
+    */
+    public boolean existItem(String id) {
+        boolean existItem = false;
+        for(Item objeto : this.items){
+            if(objeto.getId().equals(id)){
+                existItem = true;
+            }
+        }
+        return existItem;
+    }
+
+    /** 
+     * Elimina un objeto de la mochila 
+     * Devuelve null si no existe el objeto
+     */
+    public Item removeItem(String id){
+        Iterator<Item> iterator = this.items.iterator();
+        boolean borrado = false;
+        Item currentItem = null;
+        while(iterator.hasNext() && !borrado){
+            currentItem = iterator.next();
+            if(currentItem.getId().equals(id)){
+                iterator.remove();
+                borrado = true;
+            }
+        }
+
+        return currentItem;
+    }
+
+    /**
+     * Metodo que permite coger objetos en una habitacion
+     * @param comando
+     */
+    private void take(Command comando) {
+        //el comando introducido no es valido
+        if(!comando.hasSecondWord()) {
+            System.out.println("Introduce un Id correcto");
+            return; //temina la ejecucion de la funcion take
+        }
+
+        String idItem = comando.getSecondWord();
+
+        if(currentRoom.getItems().isEmpty()) {
+            System.out.println("La sala no tiene objetos");
+        }else{
+            //Si existe el objeto en la sala
+            Item objeto = currentRoom.find(idItem);
+            if(objeto != null){
+                if(objeto.canTakeItem()){
+                    int peso = pesoAcumulado() + objeto.getItemWeight();
+                    if(peso <= pesoMax ){
+                        //Lo puedo coger
+                        this.items.add(objeto);
+                        currentRoom.removeItem(idItem);
+                    }else{
+                        System.out.println("Llevas mucho peso.");
+                    }
+                }else{
+                    System.out.println("No se puede coger ese objeto");
+                }
+            }else {
+                System.out.println("No existe ese objeto en la sala");
+            }
+        }
+    }
 
     /**
      * Print out some help information.
@@ -210,7 +350,7 @@ public class Game
     private void back() 
     {
         if(visitadas.empty()){
-            System.out.println("Estás al inicio del juego");
+            System.out.println("Estï¿½s al inicio del juego");
         }else{
             currentRoom = visitadas.pop();
             printLocationInfo();
@@ -232,5 +372,4 @@ public class Game
 
         System.out.println();
     }
-
 }
