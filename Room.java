@@ -98,17 +98,14 @@ public class Room
      */
     public String getLongDescription(){
         String aDevolver = "You are in the " + getDescription() + "\n" + getExitString();
-
-
-        //Mi sala contiene objetos
-        if(this.items.size() > 0 ){
-            for(Item item : this.items) {
+        for(Item item : this.items) {
                 aDevolver = aDevolver + "\nObjeto: " + item.getItemDescription()+ "\nPeso del objeto: " + item.getItemWeight() + "gr";
-            }
-        }else { //Mi sala no contiene objetos
+        }
+
+        //Mi sala no contiene objetos
+        if(this.items.isEmpty()){
             aDevolver = aDevolver + "\nObjeto: " + "Esta sala no tiene ningun objeto.";
         }
-        
         
         return aDevolver; 
     } 
