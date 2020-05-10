@@ -12,7 +12,7 @@ import java.util.Stack;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
+ * @author  Michael Kï¿½lling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -28,7 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        player = new Player(createRooms());
+        player = new Player(createRooms(), 700);
     }
 
     /**
@@ -39,20 +39,20 @@ public class Game
         Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
-        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo");
+        comedor = new Room("Comedor del castillo, encuentra a Bucefalo");
         cocina = new Room("Cocina");
         cuartel = new Room("Cuartel");
         armeria = new Room("Armeria");
-        establo = new Room("Establo, Bucèfalo!!");
+        establo = new Room("Establo, Bucefalo!!");
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
-        cocina.addItem(new Item("Frutero", 200));
-        corral.addItem(new Item("Cubo", 50));
-        corral.addItem(new Item("Herradura", 10));
-        dormitorio.addItem(new Item("Cofre de oro", 500));
-        cuartel.addItem(new Item("Casco", 120));
-        armeria.addItem(new Item("Espada", 1100));
+        cocina.addItem(new Item("Frutero con manzanas", 200 , "frutero",true));
+        corral.addItem(new Item("Cubo con agua", 50, "cubo", false));
+        corral.addItem(new Item("Herradura de caballo", 10, "herradura", true));
+        dormitorio.addItem(new Item("Cofre de oro", 500, "cofre", true));
+        cuartel.addItem(new Item("Casco de acero", 120,"casco", false));
+        armeria.addItem(new Item("Espada del rey", 1100, "espada", true));
 
         // initialise room exits        
         comedor.setExit("east", cuartel);
@@ -141,6 +141,15 @@ public class Game
         }
         else if (commandWord.equals("back")){           
             player.back();
+        }
+        else if(commandWord.equals("take")){
+            player.take(command);
+        }
+        else if(commandWord.equals("items")){
+            player.items();
+        }
+        else if(commandWord.equals("drop")){
+            player.drop(command);
         }
 
         return wantToQuit;

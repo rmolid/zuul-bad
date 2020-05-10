@@ -13,7 +13,7 @@ public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-            "go", "quit", "help", "look" , "eat" , "back"
+            "go", "quit", "help", "look" , "eat" , "back", "take", "items", "drop"
         };
 
     /**
@@ -40,7 +40,7 @@ public class CommandWords
     }
 
     /** 
-     * Imprime por pantalla todos los comandos válidos 
+     * Imprime por pantalla todos los comandos vï¿½lidos 
      */
     public String getCommandList(){
         String comandosValidos = "";
