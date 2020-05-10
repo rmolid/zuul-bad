@@ -1,4 +1,3 @@
-
 /**
  * Esta clase representa un objeto que tiene una descripcion y un peso.
  * 
@@ -9,15 +8,15 @@ public class Item
 {
 
     private String itemDescription;
-    private int itemWeight;
+    private String id;
 
     /**
      * Constructor para los objetos de la clase Item
      */
-    public Item(String itemDescription, int itemWeight)
+    public Item(String itemDescription, String id)
     {
         this.itemDescription = itemDescription;
-        this.itemWeight = itemWeight;
+        this.id = id;
     }
 
     /**
@@ -26,11 +25,18 @@ public class Item
     public String getItemDescription(){
         return itemDescription;
     }
-    
-    /**
-    * Devuelve el peso del objeto
-    */
-    public int getItemWeight(){
-        return itemWeight;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() + "\n" +
+                "Descripcion: " + getItemDescription() + "\n";
     }
 }

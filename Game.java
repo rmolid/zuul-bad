@@ -12,7 +12,7 @@ import java.util.Stack;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
+ * @author  Michael Kï¿½lling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -39,20 +39,20 @@ public class Game
         Room comedor, cocina,dormitorio, cuartel, armeria, establo, corral;
 
         // create the rooms
-        comedor = new Room("Comedor del castillo, encuentra a Bucéfalo");
+        comedor = new Room("Comedor del castillo, encuentra a Bucefalo");
         cocina = new Room("Cocina");
         cuartel = new Room("Cuartel");
         armeria = new Room("Armeria");
-        establo = new Room("Establo, Bucèfalo!!");
+        establo = new Room("Establo, Bucefalo!!");
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
-        cocina.addItem(new Item("Frutero", 200));
-        corral.addItem(new Item("Cubo", 50));
-        corral.addItem(new Item("Herradura", 10));
-        dormitorio.addItem(new Item("Cofre de oro", 500));
-        cuartel.addItem(new Item("Casco", 120));
-        armeria.addItem(new Item("Espada", 1100));
+        cocina.addItem(new Item("Frutero con manzanas", "frutero"));
+        corral.addItem(new Item("Cubo con agua", "cubo"));
+        corral.addItem(new Item("Herradura de caballo", "herradura"));
+        dormitorio.addItem(new Item("Cofre de oro", "cofre"));
+        cuartel.addItem(new Item("Casco de acero","casco"));
+        armeria.addItem(new Item("Espada del rey", "espada"));
 
         // initialise room exits        
         comedor.setExit("east", cuartel);
@@ -141,6 +141,9 @@ public class Game
         }
         else if (commandWord.equals("back")){           
             player.back();
+        }
+        else if(commandWord.equals("take")){
+            player.take(command);
         }
 
         return wantToQuit;

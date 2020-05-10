@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 /**
  * La clase Plater representa a un jugador del juego.
@@ -9,6 +10,7 @@ public class Player
 {
     private Room currentRoom;
     private Stack<Room> visitadas;
+    private ArrayList<Item> items;
 
     /**
      * Constructor for objects of class Player
@@ -17,7 +19,8 @@ public class Player
     {
         // initialise instance variables
         this.currentRoom = currentRoom;
-        visitadas = new Stack<Room>();
+        this.visitadas = new Stack<Room>();
+        this.items = new ArrayList<>();
     }
 
     /**
@@ -59,7 +62,7 @@ public class Player
     public void back() 
     {
         if(visitadas.empty()){
-            System.out.println("Estás al inicio del juego");
+            System.out.println("Estas al inicio del juego");
         }else{
             currentRoom = visitadas.pop();
             printLocationInfo();
@@ -80,5 +83,32 @@ public class Player
         System.out.println(currentRoom.getLongDescription());
 
         System.out.println();
+    }
+
+   /**
+     * Metodo que permite coger objetos de una habitacion
+     * @param comando
+     */
+    public void take(Command comando) {
+        //el comando introducido no es valido
+        if(!comando.hasSecondWord()) {
+            System.out.println("Introduce un Id correcto");
+            return; //temina la ejecucion de la funcion take
+        }
+
+        String idItem = comando.getSecondWord();
+
+        if(currentRoom.getItems().isEmpty()) {
+            System.out.println("La sala no tiene objetos");
+        }else{
+            //Si existe el objeto en la sala
+            Item objeto = currentRoom.find(idItem);
+            if(objeto != null){
+                this.items.add(objeto);
+                currentRoom.removeItem(idItem);
+            }else {
+                System.out.println("No existe ese objeto en la sala");
+            }
+        }
     }
 }
