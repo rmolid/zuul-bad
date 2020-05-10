@@ -47,12 +47,12 @@ public class Game
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
-        cocina.addItem(new Item("Frutero con manzanas", "frutero", false));
-        corral.addItem(new Item("Cubo con agua", "cubo",true));
-        corral.addItem(new Item("Herradura de caballo", "herradura",true));
-        dormitorio.addItem(new Item("Cofre de oro", "cofre",true));
-        cuartel.addItem(new Item("Casco de acero","casco",true));
-        armeria.addItem(new Item("Espada del rey", "espada",true));
+        cocina.addItem(new Item("Frutero con manzanas", 200 , "frutero",true));
+        corral.addItem(new Item("Cubo con agua", 50, "cubo", false));
+        corral.addItem(new Item("Herradura de caballo", 10, "herradura", true));
+        dormitorio.addItem(new Item("Cofre de oro", 500, "cofre", true));
+        cuartel.addItem(new Item("Casco de acero", 120,"casco", false));
+        armeria.addItem(new Item("Espada del rey", 1100, "espada", true));
 
         // initialise room exits        
         comedor.setExit("east", cuartel);
@@ -144,6 +144,9 @@ public class Game
         }
         else if(commandWord.equals("take")){
             player.take(command);
+        }
+        else if(commandWord.equals("items")){
+            player.items();
         }
 
         return wantToQuit;

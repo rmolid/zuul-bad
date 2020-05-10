@@ -116,4 +116,35 @@ public class Player
             }
         }
     }
+
+    /**
+     * Muestra los objetos que hay en la mochila
+     */
+    public void items(){
+        if(items.isEmpty()){
+            System.out.println("No llevas objetos!");
+        }else{
+            String itemDescription = "Mis objetos son: \n";
+            for(Item item : this.items){
+                itemDescription += item.toString();
+            }
+
+            itemDescription += "El peso acumulado es: " + pesoAcumulado() + " gr. \n";
+            System.out.println(itemDescription);
+
+        }
+
+    }
+
+    /**
+     * Muestra el peso total de los objetos de la mochila
+     */
+    public int pesoAcumulado() {
+        int pesoAcumulado = 0;
+        for (Item item : this.items) {
+            pesoAcumulado += item.getItemWeight();
+        }
+
+        return pesoAcumulado;
+    }
 }

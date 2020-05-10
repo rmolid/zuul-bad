@@ -8,15 +8,17 @@ public class Item
 {
 
     private String itemDescription;
+    private int itemWeight;
     private String id;
     private boolean canTakeItem;
 
     /**
      * Constructor para los objetos de la clase Item
      */
-    public Item(String itemDescription, String id, boolean canTakeItem)
+    public Item(String itemDescription, int itemWeight, String id, boolean canTakeItem)
     {
         this.itemDescription = itemDescription;
+        this.itemWeight = itemWeight;
         this.id = id;
         this.canTakeItem = canTakeItem;
     }
@@ -28,6 +30,13 @@ public class Item
         return itemDescription;
     }
 
+    /**
+     * Devuelve el peso del objeto
+     */
+    public int getItemWeight(){
+        return itemWeight;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -35,7 +44,7 @@ public class Item
     public String getId() {
         return id;
     }
-
+    
     public boolean canTakeItem() {
         return this.canTakeItem;
     }
@@ -43,6 +52,7 @@ public class Item
     @Override
     public String toString() {
         return "ID: " + getId() + "\n" +
-                "Descripcion: " + getItemDescription() + "\n";
+                "Descripcion: " + getItemDescription() + "\n" +
+                "Peso: " + String.valueOf(getItemWeight()) + "gr. \n";
     }
 }
