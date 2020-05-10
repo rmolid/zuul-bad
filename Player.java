@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 /**
  * La clase Plater representa a un jugador del juego.
@@ -146,5 +147,65 @@ public class Player
         }
 
         return pesoAcumulado;
+    }
+
+        /**
+     * Metodo que permite dejar un objeto cuando este este en la mochila.
+     * Si el objeto no existe o no esta en la mochila se muestra un mensaje por pantalla
+     */
+    public void drop(Command comando) {
+        if(!comando.hasSecondWord()) {
+            System.out.println("Introduce un Id correcto");
+            return;
+        }
+
+        String idItem = comando.getSecondWord();
+
+        if(!this.items.isEmpty()){
+            //Tengo objetos
+            if(existItem(idItem)){
+                //Si existe el objeto lo borro y lo agrego a la habitacion actual
+                Item item = removeItem(idItem);
+                currentRoom.addItem(item);
+            }else{
+                //Si NO existe el objeto
+                System.out.println("No existe el objeto que quieres dejar.");
+            }
+        }else {
+            System.out.println("No tienes objetos en la mochila.");
+        }
+
+    }
+
+    /**
+    * Metodo que nos dice que el objeto existe conociendo su id.
+    */
+    public boolean existItem(String id) {
+        boolean existItem = false;
+        for(Item objeto : this.items){
+            if(objeto.getId().equals(id)){
+                existItem = true;
+            }
+        }
+        return existItem;
+    }
+
+    /** 
+     * Elimina un objeto de la mochila 
+     * Devuelve null si no existe el objeto
+     */
+    public Item removeItem(String id){
+        Iterator<Item> iterator = this.items.iterator();
+        boolean borrado = false;
+        Item currentItem = null;
+        while(iterator.hasNext() && !borrado){
+            currentItem = iterator.next();
+            if(currentItem.getId().equals(id)){
+                iterator.remove();
+                borrado = true;
+            }
+        }
+
+        return currentItem;
     }
 }
