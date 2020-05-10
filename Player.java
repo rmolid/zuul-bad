@@ -86,7 +86,7 @@ public class Player
     }
 
    /**
-     * Metodo que permite coger objetos de una habitacion
+     * Metodo que permite coger objetos en una habitacion
      * @param comando
      */
     public void take(Command comando) {
@@ -104,8 +104,13 @@ public class Player
             //Si existe el objeto en la sala
             Item objeto = currentRoom.find(idItem);
             if(objeto != null){
-                this.items.add(objeto);
-                currentRoom.removeItem(idItem);
+                if(objeto.canTakeItem()){
+                    //Lo puedo coger
+                    this.items.add(objeto);
+                    currentRoom.removeItem(idItem);
+                }else{
+                    System.out.println("No se puede coger ese objeto");
+                }
             }else {
                 System.out.println("No existe ese objeto en la sala");
             }

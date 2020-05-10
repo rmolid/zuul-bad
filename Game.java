@@ -47,12 +47,12 @@ public class Game
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
-        cocina.addItem(new Item("Frutero con manzanas", "frutero"));
-        corral.addItem(new Item("Cubo con agua", "cubo"));
-        corral.addItem(new Item("Herradura de caballo", "herradura"));
-        dormitorio.addItem(new Item("Cofre de oro", "cofre"));
-        cuartel.addItem(new Item("Casco de acero","casco"));
-        armeria.addItem(new Item("Espada del rey", "espada"));
+        cocina.addItem(new Item("Frutero con manzanas", "frutero", false));
+        corral.addItem(new Item("Cubo con agua", "cubo",true));
+        corral.addItem(new Item("Herradura de caballo", "herradura",true));
+        dormitorio.addItem(new Item("Cofre de oro", "cofre",true));
+        cuartel.addItem(new Item("Casco de acero","casco",true));
+        armeria.addItem(new Item("Espada del rey", "espada",true));
 
         // initialise room exits        
         comedor.setExit("east", cuartel);

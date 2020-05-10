@@ -9,14 +9,16 @@ public class Item
 
     private String itemDescription;
     private String id;
+    private boolean canTakeItem;
 
     /**
      * Constructor para los objetos de la clase Item
      */
-    public Item(String itemDescription, String id)
+    public Item(String itemDescription, String id, boolean canTakeItem)
     {
         this.itemDescription = itemDescription;
         this.id = id;
+        this.canTakeItem = canTakeItem;
     }
 
     /**
@@ -32,6 +34,10 @@ public class Item
 
     public String getId() {
         return id;
+    }
+
+    public boolean canTakeItem() {
+        return this.canTakeItem;
     }
 
     @Override
