@@ -12,16 +12,18 @@ public class Player
     private Room currentRoom;
     private Stack<Room> visitadas;
     private ArrayList<Item> items;
+    private int pesoMax;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player(Room currentRoom)
+    public Player(Room currentRoom, int pesoMax)
     {
         // initialise instance variables
         this.currentRoom = currentRoom;
         this.visitadas = new Stack<Room>();
         this.items = new ArrayList<>();
+        this.pesoMax = pesoMax;
     }
 
     /**
@@ -86,7 +88,7 @@ public class Player
         System.out.println();
     }
 
-   /**
+    /**
      * Metodo que permite coger objetos en una habitacion
      * @param comando
      */
@@ -106,9 +108,14 @@ public class Player
             Item objeto = currentRoom.find(idItem);
             if(objeto != null){
                 if(objeto.canTakeItem()){
-                    //Lo puedo coger
-                    this.items.add(objeto);
-                    currentRoom.removeItem(idItem);
+                    int peso = pesoAcumulado() + objeto.getItemWeight();
+                    if(peso <= this.pesoMax ){
+                        //Lo puedo coger
+                        this.items.add(objeto);
+                        currentRoom.removeItem(idItem);
+                    }else{
+                        System.out.println("Llevas mucho peso.");
+                    }
                 }else{
                     System.out.println("No se puede coger ese objeto");
                 }
@@ -117,6 +124,7 @@ public class Player
             }
         }
     }
+
 
     /**
      * Muestra los objetos que hay en la mochila

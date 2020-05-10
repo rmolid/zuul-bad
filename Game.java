@@ -28,7 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        player = new Player(createRooms());
+        player = new Player(createRooms(), 700);
     }
 
     /**
