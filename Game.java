@@ -47,6 +47,7 @@ public class Game
         dormitorio = new Room("Dormitorio");
         corral = new Room ( "Corral");
 
+        cocina.addItem(new Item("Bebida con poderes", 5 , "bebida", true));
         cocina.addItem(new Item("Frutero con manzanas", 200 , "frutero",true));
         corral.addItem(new Item("Cubo con agua", 50, "cubo", false));
         corral.addItem(new Item("Herradura de caballo", 10, "herradura", true));
@@ -150,6 +151,9 @@ public class Game
         }
         else if(commandWord.equals("drop")){
             player.drop(command);
+        }
+        else if(commandWord.equals("drink")){
+            player.drink(command);
         }
 
         return wantToQuit;

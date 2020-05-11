@@ -13,6 +13,7 @@ public class Player
     private Stack<Room> visitadas;
     private ArrayList<Item> items;
     private int pesoMax;
+    private boolean drinkBebida;
 
     /**
      * Constructor for objects of class Player
@@ -24,6 +25,11 @@ public class Player
         this.visitadas = new Stack<Room>();
         this.items = new ArrayList<>();
         this.pesoMax = pesoMax;
+        this.drinkBebida = false;
+    }
+
+    public void setDrinkBebida(boolean drinkBebida){
+        this.drinkBebida = drinkBebida;
     }
 
     /**
@@ -107,7 +113,7 @@ public class Player
             //Si existe el objeto en la sala
             Item objeto = currentRoom.find(idItem);
             if(objeto != null){
-                if(objeto.canTakeItem()){
+                if(objeto.canTakeItem() || this.drinkBebida){
                     int peso = pesoAcumulado() + objeto.getItemWeight();
                     if(peso <= this.pesoMax ){
                         //Lo puedo coger
@@ -125,6 +131,30 @@ public class Player
         }
     }
 
+    /**
+     * Metodo que permite beber una bebida
+     * @param comando
+     */
+    public void drink(Command comando) {
+        //el comando introducido no es valido
+        if(!comando.hasSecondWord()) {
+            System.out.println("Introduce un Id correcto");
+            return; //temina la ejecucion de la funcion take
+        }
+
+        String idItem = comando.getSecondWord();
+        if(idItem.equals("bebida")){
+            if(existItem(idItem)){
+                setDrinkBebida(true);
+                removeItem(idItem);
+            }else{
+                System.out.println("No te quedan bebidas en tu mochila");
+            }
+        }else{
+            System.out.println("Ese objeto no es una bebida");
+        }
+
+    }
 
     /**
      * Muestra los objetos que hay en la mochila
